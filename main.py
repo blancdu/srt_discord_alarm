@@ -17,10 +17,11 @@ def main():
         return SRT.SRT(
             srt_id=SRT_ID,
             srt_pw=SRT_PW,
-            verbose=True
+            verbose=False
         )
     srt = get_srt()
     webhook = SyncWebhook.from_url(DISCORD_WEBHOOK_URL)
+    webhook.send("알람봇 시작")
     if not all([DISCORD_WEBHOOK_URL, SRT_ID, SRT_PW]):
         print(".env 확인 필요")
         return
@@ -37,7 +38,7 @@ def main():
     def job():
         nonlocal srt
         try:
-            print(time.strftime("%Y-%m-%d %H:%M:%S"))
+            # print(time.strftime("%Y-%m-%d %H:%M:%S"))
             results = srt.search_train(
                 dep=dep,
                 arr=arr,
