@@ -1,0 +1,4 @@
+schedule
+SRTrain
+discord
+python-dotenv
