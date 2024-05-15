@@ -21,7 +21,7 @@ def main():
         )
     srt = get_srt()
     webhook = SyncWebhook.from_url(DISCORD_WEBHOOK_URL)
-    webhook.send("알람봇 시작")
+    # webhook.send("알람봇 시작")
     if not all([DISCORD_WEBHOOK_URL, SRT_ID, SRT_PW]):
         print(".env 확인 필요")
         return
@@ -48,7 +48,7 @@ def main():
                 available_only=available_only
                 )
         except ConnectionError:
-            print(f'{time.strftime("%Y-%m-%d %H:%M:%S")} | 커넥션이 끊어져서 새로 연결합니다.')
+            # print(f'{time.strftime("%Y-%m-%d %H:%M:%S")} | 커넥션이 끊어져서 새로 연결합니다.')
             srt = get_srt()
             results = srt.search_train(
                 dep=dep,
@@ -66,13 +66,13 @@ def main():
                 msg += f'{train} : {general_seat}\n'
                 train_available[train] = general_seat
         if msg:
-            msg = "변경사항 알림\n" + msg + "\n\n[SRT플레이 바로가기](https://srtplay.com/ticket/reservation)"
-            print(msg)
+            msg = f"변경사항 알림 <t:{int(time.time())}:T>\n" + msg + "\n[SRT플레이 바로가기](https://srtplay.com/ticket/reservation)"
+            # print(msg)
             webhook.send(msg)
 
     schedule.every(5).seconds.do(job)
     print("알림시작")
-    while True:
+    while int(time.time()) < 1716721200:
         schedule.run_pending()
         time.sleep(1)
 
